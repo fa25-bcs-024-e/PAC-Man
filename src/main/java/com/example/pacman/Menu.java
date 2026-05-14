@@ -1,11 +1,14 @@
 package com.example.pacman;
 
+//change made for maximize add this
+
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -133,7 +136,7 @@ public class Menu {
 
         startGameButton.setOnAction(e -> {
 
-            Game game = new Game();
+            Game game = new Game(stage);
 
             BorderPane gameRoot = new BorderPane();
             gameRoot.setStyle("-fx-background-color: black;");
@@ -144,10 +147,10 @@ public class Menu {
             gameRoot.setTop(hudContainer);
             gameRoot.setCenter(game.getCanvas());
 
-            Scene gameScene = new Scene(gameRoot, 1000, 600);
-            stage.setMaximized(true);
+            Scene gameScene = new Scene(gameRoot);
 
             stage.setScene(gameScene);
+            stage.setMaximized(false);
             stage.setMaximized(true);
             game.start(gameScene);
         });

@@ -1,10 +1,16 @@
 package com.example.pacman;
 
+//updated lives system
+
 import javafx.animation.AnimationTimer;
+import javafx.animation.PauseTransition;
+import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
+import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class Game {
 
@@ -22,8 +28,14 @@ public class Game {
     private GraphicsContext gc;
 
     private Label hud;
+    protected Stage stage;
+    private boolean gameOverHandled = false;
 
-    public Game() {
+
+
+    public Game(Stage stage) {
+
+        this.stage = stage;
 
         maze = new Maze();
         collision = new CollisionSystem(maze);
@@ -89,6 +101,29 @@ public class Game {
 
         // pause logic (lives system)
         livesSystem.update();
+        if (livesSystem.isGameOver() && !gameOverHandled) {
+
+            gameOverHandled = true;
+
+            LossScreen lossScreen = new LossScreen();
+            stage.setScene(lossScreen.getScene(stage));
+            stage.setMaximized(false);
+            stage.setMaximized(true);
+
+            PauseTransition delay = new PauseTransition(Duration.seconds(3));
+            delay.setOnFinished(e -> {
+
+                Menu menu = new Menu();
+                stage.setScene(menu.getScene(stage));
+                stage.setMaximized(false);
+                stage.setMaximized(true);
+            });
+
+            delay.play();
+
+            return;
+        }
+
         if (livesSystem.isPaused()) {
             return;
         }
@@ -103,6 +138,7 @@ public class Game {
                 " SCORE: " + gameState.getScore()
                         + "          HIGH SCORE: "
                         + gameState.getHighScore()
+                        + "\nLIVES: " + livesSystem.getLives()
         );
     }
 
@@ -113,4 +149,5 @@ public class Game {
         player.draw(gc);
         randomGhost.draw(gc);
     }
+
 }

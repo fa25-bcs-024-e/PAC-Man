@@ -1,9 +1,13 @@
 package com.example.pacman;
 
+//add this
+
 public class LivesSystem {
 
     private boolean paused = false;
     private long pauseStartTime = 0;
+    private int lives = 3;
+    private boolean gameOver = false;
 
     private final CollisionSystem collision;
     private final Player player;
@@ -26,6 +30,14 @@ public class LivesSystem {
         this.ghostStartY = ghostStartY;
     }
 
+    public int getLives() {
+        return lives;
+    }
+
+    public boolean isGameOver() {
+        return gameOver;
+    }
+
     public void update() {
 
         if (paused) {
@@ -39,6 +51,16 @@ public class LivesSystem {
         }
 
         if (collision.circlesTouch(player, ghost)) {
+
+            if (gameOver) return;
+
+            lives--;
+
+            if (lives <= 0) {
+                gameOver = true;
+                return;
+            }
+
             paused = true;
             pauseStartTime = System.currentTimeMillis();
         }

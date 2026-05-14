@@ -1,10 +1,13 @@
 package com.example.pacman;
 
+//maximized but is a bit glitchy
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
@@ -20,7 +23,7 @@ public class Main extends Application {
 
         // ================= MENU SCENE =================
         Group menuRoot = new Group();
-        Scene scene = new Scene(menuRoot, 1000, 600, Color.BLACK);
+        Scene scene = new Scene(menuRoot,1000,600,Color.BLACK);
 
         // --- Your Pac-Man letter images ---
         Image letterp = new Image(getClass().getResource("/bubble-letter-p-lowercase-orange-icon.png").toExternalForm());
@@ -81,7 +84,7 @@ public class Main extends Application {
         );
 
         // ================= GAME SCENE =================
-        Game game = new Game();
+        Game game = new Game(stage);
 
         BorderPane gameRoot = new BorderPane();
         gameRoot.setStyle("-fx-background-color: black;");
@@ -95,6 +98,8 @@ public class Main extends Application {
         startButton.setOnAction(e -> {
             Menu menu = new Menu();
             stage.setScene(menu.getScene(stage));
+            stage.setMaximized(false);
+            stage.setMaximized(true);
         });
 
         // ================= ADD MENU ELEMENTS =================
@@ -117,5 +122,8 @@ public class Main extends Application {
     public static void main(String[] args) {
         Application.launch(com.example.pacman.Main.class, args);
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> c31e235 (added lives and smwhat fixed maximize)
 }
