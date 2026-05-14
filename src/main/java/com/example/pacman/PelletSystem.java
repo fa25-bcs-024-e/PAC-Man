@@ -24,13 +24,19 @@ public class PelletSystem {
                         continue;
                     }
 
-
-
-
                     double x = c * maze.TILE_SIZE + maze.TILE_SIZE / 2.0;
                     double y = r * maze.TILE_SIZE + maze.TILE_SIZE / 2.0;
 
-                    pellets.add(new Pellet(x, y));
+                    boolean power =
+                            (r == 3&& c == 3) ||
+                                    (r == 3 && c == 15) ||
+                                    (r == 16 && c == 1) ||
+                                    (r == 16 && c == 17);
+
+                    pellets.add(new Pellet(x, y, power));
+
+
+//                    pellets.add(new Pellet(x, y));
                 }
             }
         }
@@ -64,10 +70,29 @@ public class PelletSystem {
 
                 if (dist < player.getRadius() + p.radius) {
 
+
                     p.eaten = true;
 
-                    state.addScore(10);
+                    if (p.powerPellet) {
+
+                        state.addScore(50);
+
+                        state.setPowerMode(true);
+
+                    } else {
+
+                        state.addScore(10);
+                    }
+
                     totalEaten++;
+
+
+
+
+//                    p.eaten = true;
+//
+//                    state.addScore(10);
+//                    totalEaten++;
                 }
             }
         }
