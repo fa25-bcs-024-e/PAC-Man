@@ -17,7 +17,7 @@ public class SoundManager {
             new AudioClip(SoundManager.class.getResource("/mixkit-camera-shutter-click-1133.wav").toExternalForm());
 
     private static final AudioClip startSound =
-            new AudioClip(SoundManager.class.getResource("Pacman Start Sound Effect.mp3").toExternalForm());
+            new AudioClip(SoundManager.class.getResource("/Pacman Start Sound Effect.mp3").toExternalForm());
 
     public static void GhostDieSound() {
         ghostEaten.play();
