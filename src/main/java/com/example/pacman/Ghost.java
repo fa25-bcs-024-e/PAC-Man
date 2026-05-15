@@ -8,11 +8,17 @@ public abstract class Ghost extends Entity {
     protected final Color color;
     protected String currentDir = "LEFT";
 
+
+
     protected int row;
     protected int col;
 
     protected double speed = 1.5;
     protected double radius;
+
+    protected double startX;
+    protected double startY;
+
 
     public Ghost(Maze maze, CollisionSystem collision,
                  double startX, double startY, Color color) {
@@ -20,6 +26,8 @@ public abstract class Ghost extends Entity {
         super(maze, collision);
 
         this.color = color;
+        this.startX = startX;
+        this.startY = startY;
 
         this.row = (int)(startY / maze.TILE_SIZE);
         this.col = (int)(startX / maze.TILE_SIZE);
@@ -85,10 +93,24 @@ public abstract class Ghost extends Entity {
         }
     }
 
+
     @Override
     public void draw(GraphicsContext gc) {
 
-        gc.setFill(color);
+
+
+
+        if (Game.gameState.isPowerMode()) {
+
+            gc.setFill(Color.DEEPSKYBLUE);
+
+        } else {
+
+            gc.setFill(color);
+        }
+
+
+
 
         gc.fillRoundRect(
                 x - radius,
@@ -97,5 +119,15 @@ public abstract class Ghost extends Entity {
                 radius * 2.2,
                 15, 15
         );
+    }
+    public void returnToSpawn() {
+
+        this.col = (int)(startX / maze.TILE_SIZE);
+        this.row = (int)(startY / maze.TILE_SIZE);
+
+        this.x = pixelX();
+        this.y = pixelY();
+
+        currentDir = "LEFT";
     }
 }

@@ -122,8 +122,8 @@ public class Main extends Application {
     public static void main(String[] args) {
         Application.launch(com.example.pacman.Main.class, args);
     }
-<<<<<<< HEAD
-
-=======
->>>>>>> c31e235 (added lives and smwhat fixed maximize)
+//<<<<<<< HEAD
+//
+//=======
+//>>>>>>> c31e235 (added lives and smwhat fixed maximize)
 }

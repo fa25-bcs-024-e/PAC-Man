@@ -38,7 +38,7 @@ public class PelletSystem {
                     pellets.add(new Pellet(x, y, power));
 
 
-//                    pellets.add(new Pellet(x, y));
+
                 }
             }
         }
@@ -79,7 +79,8 @@ public class PelletSystem {
 
                         state.addScore(50);
 
-                        state.setPowerMode(true);
+
+                        state.activatePowerMode();
 
                     } else {
 
@@ -91,10 +92,7 @@ public class PelletSystem {
 
 
 
-//                    p.eaten = true;
-//
-//                    state.addScore(10);
-//                    totalEaten++;
+
                 }
             }
         }

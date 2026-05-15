@@ -20,7 +20,7 @@ public class Game {
     private Player player;
     private RandomGhost randomGhost;
 
-    private GameState gameState;
+    public static GameState gameState;
     private PelletSystem pelletSystem;
     private LivesSystem livesSystem;
 
@@ -30,6 +30,7 @@ public class Game {
     private Label hud;
     protected Stage stage;
     private boolean gameOverHandled = false;
+    private boolean winHandled = false;
 
 
 
@@ -39,7 +40,7 @@ public class Game {
 
         maze = new Maze();
         collision = new CollisionSystem(maze);
-
+        gameState =new GameState();
         // Player
         double playerStartX = 1 * maze.TILE_SIZE + maze.TILE_SIZE / 2.0;
         double playerStartY = 1 * maze.TILE_SIZE + maze.TILE_SIZE / 2.0;
@@ -131,8 +132,55 @@ public class Game {
         player.update();
         randomGhost.update();
 
+
+        if (collision.circlesTouch(player, randomGhost)) {
+
+            // POWER MODE
+            if (gameState.isPowerMode()) {
+
+                randomGhost.returnToSpawn();
+
+
+                gameState.addScore(200);
+            }
+
+
+        }
+
+
+
         pelletSystem.update(gameState);
         pelletSystem.checkCollision(player, gameState);
+
+
+        if (pelletSystem.isWin() && !winHandled) {
+
+            winHandled = true;
+
+            WinScreen winScreen = new WinScreen();
+            stage.setScene(winScreen.getScene(stage));
+
+            stage.setMaximized(false);
+            stage.setMaximized(true);
+
+            PauseTransition delay = new PauseTransition(Duration.seconds(3));
+
+            delay.setOnFinished(e -> {
+
+                Menu menu = new Menu();
+                stage.setScene(menu.getScene(stage));
+
+                stage.setMaximized(false);
+                stage.setMaximized(true);
+            });
+
+            delay.play();
+
+            return;
+        }
+
+
+
 
         hud.setText(
                 " SCORE: " + gameState.getScore()
