@@ -21,6 +21,7 @@ public class Menu {
 
         Group root = new Group();
         Scene scene = new Scene(root,1000,600, Color.BLACK);
+        SoundManager soundManager= new SoundManager();
 
         Image letterm  = new Image(getClass().getResource("/bubble-letter-m-lowercase-orange-icon.png").toExternalForm());
         ImageView letter_m = new ImageView(letterm);
@@ -102,11 +103,14 @@ public class Menu {
         );
 
         quitButton.setOnAction(e -> {
+
+            soundManager.ButtonSound();
             Platform.exit();
         });
 
         scoresGameButton.setOnAction(e -> {
 
+            soundManager.ButtonSound();
             ScoreScreen scoreScreen = new ScoreScreen();
             stage.setScene(scoreScreen.getScene(stage));
 
@@ -133,6 +137,8 @@ public class Menu {
             stage.setMaximized(false);
             stage.setMaximized(true);
             game.start(gameScene);
+
+            soundManager.StartSound();
         });
 
         root.getChildren().add(quitButton);

@@ -37,7 +37,7 @@ public class Game {
     private boolean gameOverHandled = false;
     private boolean winHandled = false;
 
-
+    SoundManager soundManager=new SoundManager();
 
     public Game(Stage stage) {
 
@@ -159,6 +159,9 @@ public class Game {
 
         // ================= PAUSE =================
         if (livesSystem.isPaused()) {
+
+            soundManager.PlayerDieSound();
+
             return;
         }
 
@@ -177,6 +180,8 @@ public class Game {
             if (collision.circlesTouch(player, ghost)) {
 
                 if (Game.gameState.isPowerMode()) {
+
+                    soundManager.GhostDieSound();
 
                     ghost.returnToSpawn();
                     gameState.addScore(200);

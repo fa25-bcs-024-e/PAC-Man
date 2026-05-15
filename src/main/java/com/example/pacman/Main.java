@@ -24,6 +24,7 @@ public class Main extends Application {
         // ================= MENU SCENE =================
         Group menuRoot = new Group();
         Scene scene = new Scene(menuRoot, 1000, 600, Color.BLACK);
+        SoundManager soundManager =new SoundManager();
 
         // --- Your Pac-Man letter images ---
         Image letterp = new Image(getClass().getResource("/bubble-letter-p-lowercase-orange-icon.png").toExternalForm());
@@ -96,6 +97,7 @@ public class Main extends Application {
         gameRoot.setCenter(game.getCanvas());
 
         startButton.setOnAction(e -> {
+            soundManager.ButtonSound();
             Menu menu = new Menu();
             stage.setScene(menu.getScene(stage));
             stage.setMaximized(false);

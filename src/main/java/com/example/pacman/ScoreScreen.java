@@ -19,6 +19,7 @@ public class ScoreScreen {
 
         Group root = new Group();
         Scene scene = new Scene(root, 1000, 600, Color.BLACK);
+        SoundManager soundManager=new SoundManager();
 
         ArrayList<Integer> scores = new ArrayList<>();
 
@@ -88,6 +89,7 @@ public class ScoreScreen {
 
         menuButton.setOnAction(e -> {
 
+            soundManager.ButtonSound();
             Menu menu = new Menu();
             stage.setScene(menu.getScene(stage));
 

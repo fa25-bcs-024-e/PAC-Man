@@ -13,6 +13,8 @@ public class PelletSystem {
 
     private int totalEaten = 0;
 
+    SoundManager soundManager=new SoundManager();
+
     public PelletSystem(Maze maze) {
 
         int[][] grid = maze.getMaze();
@@ -72,6 +74,7 @@ public class PelletSystem {
 
                 if (dist < player.getRadius() + p.radius) {
 
+                    soundManager.PelletSound();
 
                     p.eaten = true;
 
