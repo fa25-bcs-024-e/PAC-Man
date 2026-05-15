@@ -116,5 +116,16 @@ public class RandomGhost extends Ghost {
                 radius * 2,
                 radius * 2
         );
+        if (Game.gameState.isPowerMode()) {
+
+            gc.setGlobalAlpha(0.5);
+            gc.setFill(Color.BLUE);
+
+            gc.fillRoundRect(x - radius, y - radius,
+                    radius * 2, radius * 2,
+                    13, 13);
+
+            gc.setGlobalAlpha(1.0);
+        }
     }
 }

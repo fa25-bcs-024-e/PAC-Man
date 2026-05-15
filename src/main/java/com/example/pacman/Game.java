@@ -171,20 +171,20 @@ public class Game {
         chaosGhost.update();
 
 
-        if (collision.circlesTouch(player, randomGhost)) {
+        List<Ghost> ghosts = List.of(randomGhost, chaseGhost, shyGhost, chaosGhost);
 
-            // POWER MODE
-            if (gameState.isPowerMode()) {
+        for (Ghost ghost : ghosts) {
 
-                randomGhost.returnToSpawn();
+            if (collision.circlesTouch(player, ghost)) {
 
+                if (Game.gameState.isPowerMode()) {
 
-                gameState.addScore(200);
+                    ghost.returnToSpawn();
+                    gameState.addScore(200);
+
+                }
             }
-
-
         }
-
 
 
         pelletSystem.update(gameState);

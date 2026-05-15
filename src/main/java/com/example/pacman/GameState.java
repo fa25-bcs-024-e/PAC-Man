@@ -25,7 +25,7 @@ public class GameState {
             long elapsed =
                     System.currentTimeMillis() - powerStartTime;
 
-            if (elapsed >= 6000) {
+            if (elapsed >= 8000) {
                 powerMode = false;
             }
         }

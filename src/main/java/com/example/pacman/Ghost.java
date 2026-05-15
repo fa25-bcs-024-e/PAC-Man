@@ -104,20 +104,7 @@ public abstract class Ghost extends Entity {
     @Override
     public void draw(GraphicsContext gc) {
 
-
-
-
-        if (Game.gameState.isPowerMode()) {
-
-            gc.setFill(Color.DEEPSKYBLUE);
-
-        } else {
-
             gc.setFill(color);
-        }
-
-
-
 
         gc.fillRoundRect(
                 x - radius,
