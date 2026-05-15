@@ -2,6 +2,7 @@ package com.example.pacman;
 
 //change made for maximize add this
 
+import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -99,6 +100,19 @@ public class Menu {
                         "-fx-border-color: white;" +
                         "-fx-border-width: 2;"
         );
+
+        quitButton.setOnAction(e -> {
+            Platform.exit();
+        });
+
+        scoresGameButton.setOnAction(e -> {
+
+            ScoreScreen scoreScreen = new ScoreScreen();
+            stage.setScene(scoreScreen.getScene(stage));
+
+            stage.setMaximized(false);
+            stage.setMaximized(true);
+        });
 
         startGameButton.setOnAction(e -> {
 

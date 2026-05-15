@@ -4,7 +4,12 @@ package com.example.pacman;
 public class GameState {
 
     private int score = 0;
-    private int highScore = 0;
+    private int highScore ;
+
+    public GameState() {
+
+        highScore = HighScoreManager.loadHighScore();
+    }
 
     // POWER MODE
     private boolean powerMode = false;

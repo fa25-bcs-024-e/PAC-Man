@@ -69,7 +69,6 @@ public class Game {
         chaosGhost = new ChaosGhost(maze, collision, chaosghostStartX, chaosghostStartY, player);
 
         // Systems
-        gameState = new GameState();
         pelletSystem = new PelletSystem(maze);
         List<Ghost> ghosts = List.of(randomGhost, chaseGhost, shyGhost, chaosGhost);
 
@@ -134,7 +133,7 @@ public class Game {
         if (livesSystem.isGameOver() && !gameOverHandled) {
 
             gameOverHandled = true;
-              // ← FIX 1: stop the game loop immediately
+            HighScoreManager.saveScore(gameState.getScore());
 
             LossScreen lossScreen = new LossScreen();
             stage.setScene(lossScreen.getScene(stage));

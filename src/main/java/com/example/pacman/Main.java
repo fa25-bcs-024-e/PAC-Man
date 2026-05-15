@@ -28,41 +28,41 @@ public class Main extends Application {
         // --- Your Pac-Man letter images ---
         Image letterp = new Image(getClass().getResource("/bubble-letter-p-lowercase-orange-icon.png").toExternalForm());
         ImageView letter_p = new ImageView(letterp);
-        letter_p.setX(130);
+        letter_p.setX(230);
         letter_p.setY(140);
         letter_p.setFitWidth(140);
         letter_p.setFitHeight(142);
 
         Image lettera = new Image(getClass().getResource("/bubble-letter-a-orange-icon.png").toExternalForm());
         ImageView letter_a = new ImageView(lettera);
-        letter_a.setX(240);
+        letter_a.setX(340);
         letter_a.setY(140);
         letter_a.setFitWidth(130);
         letter_a.setFitHeight(140);
 
         Image letterc = new Image(getClass().getResource("/bubble-letter-c-orange-icon.png").toExternalForm());
         ImageView letter_c = new ImageView(letterc);
-        letter_c.setX(355);
+        letter_c.setX(455);
         letter_c.setY(140);
         letter_c.setFitWidth(127);
         letter_c.setFitHeight(140);
 
         Image letterm = new Image(getClass().getResource("/bubble-letter-m-lowercase-orange-icon.png").toExternalForm());
         ImageView letter_m = new ImageView(letterm);
-        letter_m.setX(510);
+        letter_m.setX(610);
         letter_m.setY(120);
         letter_m.setFitWidth(170);
         letter_m.setFitHeight(190);
 
         ImageView letter_a2 = new ImageView(lettera);
-        letter_a2.setX(670);
+        letter_a2.setX(770);
         letter_a2.setY(150);
         letter_a2.setFitWidth(130);
         letter_a2.setFitHeight(130);
 
         Image lettern = new Image(getClass().getResource("/bubble-letter-n-lowercase-orange-icon.png").toExternalForm());
         ImageView letter_n = new ImageView(lettern);
-        letter_n.setX(790);
+        letter_n.setX(890);
         letter_n.setY(150);
         letter_n.setFitWidth(130);
         letter_n.setFitHeight(130);
@@ -70,7 +70,7 @@ public class Main extends Application {
         // --- Start Button ---
         Button startButton = new Button("Start");
         startButton.setFont(Font.font("Comic Sans MS", javafx.scene.text.FontWeight.BOLD, 25));
-        startButton.setLayoutX(445);
+        startButton.setLayoutX(545);
         startButton.setLayoutY(400);
         startButton.setPrefWidth(120);
         startButton.setPrefHeight(65);
