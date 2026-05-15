@@ -1,14 +1,13 @@
 package com.example.pacman;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
 public abstract class Ghost extends Entity {
 
     protected final Color color;
     protected String currentDir = "LEFT";
-
-
 
     protected int row;
     protected int col;
@@ -19,6 +18,9 @@ public abstract class Ghost extends Entity {
     protected double startX;
     protected double startY;
 
+
+    protected long spawnTime;
+    protected long moveDelay = 1000; // 1 second
 
     public Ghost(Maze maze, CollisionSystem collision,
                  double startX, double startY, Color color) {
@@ -36,6 +38,8 @@ public abstract class Ghost extends Entity {
         this.y = pixelY();
 
         this.radius = maze.TILE_SIZE * 0.35;
+
+        this.spawnTime = System.currentTimeMillis();
     }
 
 
@@ -47,6 +51,10 @@ public abstract class Ghost extends Entity {
         return row * maze.TILE_SIZE + maze.TILE_SIZE / 2.0;
     }
 
+
+    protected boolean canStartMoving() {
+        return System.currentTimeMillis() - spawnTime >= moveDelay;
+    }
 
     protected boolean isCentered() {
         double cx = pixelX();
@@ -92,7 +100,6 @@ public abstract class Ghost extends Entity {
             y += Math.signum(ty - y) * speed;
         }
     }
-
 
     @Override
     public void draw(GraphicsContext gc) {

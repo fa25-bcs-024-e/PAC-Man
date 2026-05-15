@@ -1,28 +1,36 @@
 package com.example.pacman;
 
-//add this
+import java.util.List;
 
 public class LivesSystem {
 
     private boolean paused = false;
     private long pauseStartTime = 0;
+
     private int lives = 3;
     private boolean gameOver = false;
 
     private final CollisionSystem collision;
     private final Player player;
-    private final Ghost ghost;
+    private final List<Ghost> ghosts;
 
     private final double playerStartX;
     private final double playerStartY;
-    private final double ghostStartX;
-    private final double ghostStartY;
 
-    public LivesSystem(CollisionSystem collision, Player player, Ghost ghost, double playerStartX, double playerStartY, double ghostStartX, double ghostStartY) {
+    private final double[] ghostStartX;
+    private final double[] ghostStartY;
+
+    public LivesSystem(CollisionSystem collision,
+                       Player player,
+                       List<Ghost> ghosts,
+                       double playerStartX,
+                       double playerStartY,
+                       double[] ghostStartX,
+                       double[] ghostStartY) {
 
         this.collision = collision;
         this.player = player;
-        this.ghost = ghost;
+        this.ghosts = ghosts;
 
         this.playerStartX = playerStartX;
         this.playerStartY = playerStartY;
@@ -38,40 +46,47 @@ public class LivesSystem {
         return gameOver;
     }
 
+    public boolean isPaused() {
+        return paused;
+    }
+
     public void update() {
 
-        if (paused) {
+        // 1. Hard stop if game already over
+        if (gameOver) return;
 
+        // 2. Pause handling (countdown between lives)
+        if (paused) {
             if (System.currentTimeMillis() - pauseStartTime >= 2000) {
                 paused = false;
                 resetPositions();
             }
-
             return;
         }
 
-        if (collision.circlesTouch(player, ghost)) {
+        // 3. Collision check
+        for (Ghost ghost : ghosts) {
+            if (collision.circlesTouch(player, ghost)) {
 
-            if (gameOver) return;
+                lives--;
 
-            lives--;
+                if (lives <= 0) {
+                    gameOver = true;
+                }
 
-            if (lives <= 0) {
-                gameOver = true;
-                return;
+                paused = true;
+                pauseStartTime = System.currentTimeMillis();
+                break;
             }
-
-            paused = true;
-            pauseStartTime = System.currentTimeMillis();
         }
     }
 
     private void resetPositions() {
-        player.reset(playerStartX, playerStartY);
-        ghost.reset(ghostStartX, ghostStartY);
-    }
 
-    public boolean isPaused() {
-        return paused;
+        player.reset(playerStartX, playerStartY);
+
+        for (int i = 0; i < ghosts.size(); i++) {
+            ghosts.get(i).reset(ghostStartX[i], ghostStartY[i]);
+        }
     }
 }

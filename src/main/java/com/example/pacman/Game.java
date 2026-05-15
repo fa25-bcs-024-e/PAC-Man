@@ -12,6 +12,8 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.util.List;
+
 public class Game {
 
     private Maze maze;
@@ -19,6 +21,9 @@ public class Game {
 
     private Player player;
     private RandomGhost randomGhost;
+    private ChaseGhost chaseGhost;
+    private ShyGhost shyGhost;
+    private ChaosGhost chaosGhost;
 
     public static GameState gameState;
     private PelletSystem pelletSystem;
@@ -47,16 +52,36 @@ public class Game {
         player = new Player(maze, collision, playerStartX, playerStartY);
 
         // Ghost
-        double ghostStartX = 8 * maze.TILE_SIZE + maze.TILE_SIZE / 2.0;
-        double ghostStartY = 8 * maze.TILE_SIZE + maze.TILE_SIZE / 2.0;
-        randomGhost = new RandomGhost(maze, collision, ghostStartX, ghostStartY);
+        double randghostStartX = 8 * maze.TILE_SIZE + maze.TILE_SIZE / 2.0;
+        double randghostStartY = 8 * maze.TILE_SIZE + maze.TILE_SIZE / 2.0;
+        randomGhost = new RandomGhost(maze, collision, randghostStartX, randghostStartY);
+
+        double chaseghostStartX = 9 * maze.TILE_SIZE + maze.TILE_SIZE / 2.0;
+        double chaseghostStartY = 8 * maze.TILE_SIZE + maze.TILE_SIZE / 2.0;
+        chaseGhost = new ChaseGhost(maze, collision, chaseghostStartX, chaseghostStartY, player);
+
+        double shyghostStartX = 10 * maze.TILE_SIZE + maze.TILE_SIZE / 2.0;
+        double shyghostStartY = 8 * maze.TILE_SIZE + maze.TILE_SIZE / 2.0;
+        shyGhost = new ShyGhost(maze, collision, shyghostStartX, shyghostStartY, player);
+
+        double chaosghostStartX = 9 * maze.TILE_SIZE + maze.TILE_SIZE / 2.0;
+        double chaosghostStartY = 7 * maze.TILE_SIZE + maze.TILE_SIZE / 2.0;
+        chaosGhost = new ChaosGhost(maze, collision, chaosghostStartX, chaosghostStartY, player);
 
         // Systems
         gameState = new GameState();
         pelletSystem = new PelletSystem(maze);
-        livesSystem = new LivesSystem(collision, player, randomGhost,
-                playerStartX, playerStartY,
-                ghostStartX, ghostStartY);
+        List<Ghost> ghosts = List.of(randomGhost, chaseGhost, shyGhost, chaosGhost);
+
+        livesSystem = new LivesSystem(
+                collision,
+                player,
+                ghosts,
+                playerStartX,
+                playerStartY,
+                new double[]{randghostStartX, chaseghostStartX, shyghostStartX, chaosghostStartX},
+                new double[]{randghostStartY, chaseghostStartY, shyghostStartY,chaosghostStartY}
+        );
 
         // Canvas
         canvas = new Canvas(
@@ -89,25 +114,31 @@ public class Game {
         InputManager input = new InputManager(player);
         input.attach(scene);
 
-        new AnimationTimer() {
+        AnimationTimer gameLoop = new AnimationTimer() {
             @Override
             public void handle(long now) {
                 update();
                 render();
             }
-        }.start();
+        };
+
+        gameLoop.start();
     }
 
     private void update() {
 
         // pause logic (lives system)
         livesSystem.update();
+
+        // ================= GAME OVER =================
         if (livesSystem.isGameOver() && !gameOverHandled) {
 
             gameOverHandled = true;
+              // ← FIX 1: stop the game loop immediately
 
             LossScreen lossScreen = new LossScreen();
             stage.setScene(lossScreen.getScene(stage));
+
             stage.setMaximized(false);
             stage.setMaximized(true);
 
@@ -120,17 +151,24 @@ public class Game {
                 stage.setMaximized(true);
             });
 
+            
+
             delay.play();
 
             return;
         }
 
+        // ================= PAUSE =================
         if (livesSystem.isPaused()) {
             return;
         }
 
+        // ================= GAME UPDATE =================
         player.update();
         randomGhost.update();
+        chaseGhost.update();
+        shyGhost.update();
+        chaosGhost.update();
 
 
         if (collision.circlesTouch(player, randomGhost)) {
@@ -190,12 +228,16 @@ public class Game {
         );
     }
 
+
     private void render() {
 
         maze.draw(gc);
         pelletSystem.draw(gc);
         player.draw(gc);
         randomGhost.draw(gc);
+        chaseGhost.draw(gc);
+        shyGhost.draw(gc);
+        chaosGhost.draw(gc);
     }
 
 }

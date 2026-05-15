@@ -23,7 +23,7 @@ public class Main extends Application {
 
         // ================= MENU SCENE =================
         Group menuRoot = new Group();
-        Scene scene = new Scene(menuRoot,1000,600,Color.BLACK);
+        Scene scene = new Scene(menuRoot, 1000, 600, Color.BLACK);
 
         // --- Your Pac-Man letter images ---
         Image letterp = new Image(getClass().getResource("/bubble-letter-p-lowercase-orange-icon.png").toExternalForm());
@@ -122,8 +122,4 @@ public class Main extends Application {
     public static void main(String[] args) {
         Application.launch(com.example.pacman.Main.class, args);
     }
-//<<<<<<< HEAD
-//
-//=======
-//>>>>>>> c31e235 (added lives and smwhat fixed maximize)
 }
